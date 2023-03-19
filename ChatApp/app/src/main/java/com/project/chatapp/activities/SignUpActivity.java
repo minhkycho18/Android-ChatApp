@@ -14,10 +14,10 @@ import android.util.Base64;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
-import android.widget.Toast;
 
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.project.chatapp.databinding.ActivitySingUpBinding;
+import com.project.chatapp.MainActivity;
+import com.project.chatapp.databinding.ActivitySignUpBinding;
 import com.project.chatapp.utils.AppUtils;
 import com.project.chatapp.utils.Constants;
 import com.project.chatapp.utils.PreferenceManager;
@@ -28,16 +28,16 @@ import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
-public class SingUpActivity extends AppCompatActivity {
+public class SignUpActivity extends AppCompatActivity {
 
-    private ActivitySingUpBinding binding;
+    private ActivitySignUpBinding binding;
     private String encodedImage;
     private PreferenceManager preferenceManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivitySingUpBinding.inflate(getLayoutInflater());
+        binding = ActivitySignUpBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         preferenceManager = new PreferenceManager(getApplicationContext());
         setListeners();

@@ -12,11 +12,11 @@
         android:theme="@style/Theme.ChatApp"
         tools:targetApi="31">
         <activity
-            android:name=".activities.SingUpActivity"
+            android:name=".activities.SignUpActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize"/>
         <activity
-            android:name=".activities.SingInActivity"
+            android:name=".activities.SignInActivity"
             android:windowSoftInputMode="adjustResize"
             android:exported="true">
             <intent-filter>
@@ -25,11 +25,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-<<<<<<< HEAD
-
         <activity android:name=".MainActivity" />
 
-=======
         <service
             android:name=".firebase.MessagingService"
             android:exported="false">
@@ -37,7 +34,6 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT"/>
             </intent-filter>
         </service>
->>>>>>> 2c20d9b (ANDROID: Create and connect firebase 19.03.2023)
     </application>
 
 </manifest>
