@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:clipToPadding="false"
     android:overScrollMode="never"
-    android:padding="@dimen/_24sdp"
+    android:padding="@dimen/_15sdp"
     android:scrollbars="none"
     tools:context=".activities.SignUpActivity">
 
@@ -22,18 +22,19 @@
             android:layout_marginTop="@dimen/_20sdp"
             android:text="@string/create_new_account"
             android:textColor="@color/primary_text"
-            android:textSize="@dimen/_18ssp"
+            android:textSize="@dimen/_30ssp"
             android:textStyle="bold"/>
 
         <FrameLayout
             android:id="@+id/layoutImage"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" >
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp">
 
             <com.makeramen.roundedimageview.RoundedImageView
                 android:id="@+id/imageProfile"
-                android:layout_width="@dimen/_80sdp"
-                android:layout_height="@dimen/_80sdp"
+                android:layout_width="@dimen/_65sdp"
+                android:layout_height="@dimen/_65sdp"
                 android:background="@drawable/background_image"
                 android:scaleType="centerCrop"
                 app:riv_oval="true"/>
@@ -137,8 +138,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_10sdp"
             android:text="@string/sign_in"
-            android:textColor="@color/primary"
-            android:textSize="@dimen/_13ssp"
+            android:textColor="@color/third_text"
+            android:textSize="@dimen/_15ssp"
             android:textStyle="bold" />
 
     </LinearLayout>

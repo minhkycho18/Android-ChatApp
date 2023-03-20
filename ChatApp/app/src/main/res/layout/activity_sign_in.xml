@@ -15,14 +15,19 @@
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
         android:orientation="vertical">
+        <ImageView
+            android:layout_width="@dimen/_80sdp"
+            android:layout_height="@dimen/_80sdp"
+            android:src="@drawable/_109137_app_blue_chat_communication_message_icon">
+        </ImageView>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_40sdp"
+            android:layout_marginTop="@dimen/_20sdp"
             android:text="@string/welcome_back"
             android:textColor="@color/primary_text"
-            android:textSize="@dimen/_18ssp"
+            android:textSize="@dimen/_34ssp"
             android:textStyle="bold"/>
 
         <TextView
@@ -89,18 +94,15 @@
 
         </FrameLayout>
 
-
-
         <TextView
             android:id="@+id/textCreateNewAccount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_30sdp"
             android:text="Create New Account"
-            android:textColor="@color/primary"
-            android:textSize="@dimen/_13ssp"
+            android:textColor="@color/third_text"
+            android:textSize="@dimen/_15ssp"
             android:textStyle="bold" />
-
 
     </LinearLayout>
 

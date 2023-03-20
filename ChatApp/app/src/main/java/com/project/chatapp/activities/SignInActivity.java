@@ -12,6 +12,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.project.chatapp.MainActivity;
 import com.project.chatapp.databinding.ActivitySignInBinding;
+import com.project.chatapp.utils.AppUtils;
 import com.project.chatapp.utils.Constants;
 import com.project.chatapp.utils.PreferenceManager;
 
@@ -64,7 +65,7 @@ public class SignInActivity extends AppCompatActivity {
                         startActivity(intent);
                     } else {
                         loading(false);
-                        showToast("Unable to sign in");
+                        AppUtils.showToast("Unable to sign in",this);
                     }
                 });
     }
@@ -79,19 +80,16 @@ public class SignInActivity extends AppCompatActivity {
         }
     }
 
-    private void showToast(String message) {
-        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
-    }
 
     private Boolean isValidSignInDetails() {
         if(binding.inputEmail.getText().toString().trim().isEmpty()) {
-            showToast("Enter email");
+            AppUtils.showToast("Enter email",this);
             return false;
         } else if (!Patterns.EMAIL_ADDRESS.matcher(binding.inputEmail.getText().toString()).matches()) {
-            showToast("Enter valid email");
+            AppUtils.showToast("Enter valid email",this);
             return false;
         } else if (binding.inputPassword.getText().toString().trim().isEmpty()) {
-            showToast("Enter password");
+            AppUtils.showToast("Enter password",this);
         }
         return true;
     }
