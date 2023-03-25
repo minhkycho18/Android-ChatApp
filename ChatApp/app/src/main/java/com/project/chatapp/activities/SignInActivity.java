@@ -4,13 +4,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
-import android.widget.Toast;
 
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.project.chatapp.MainActivity;
 import com.project.chatapp.databinding.ActivitySignInBinding;
 import com.project.chatapp.utils.AppUtils;
 import com.project.chatapp.utils.Constants;
@@ -25,10 +24,13 @@ public class SignInActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         preferenceManager = new PreferenceManager(getApplicationContext());
+        Log.d("DEBUG","Pass Sign in");
+        Log.d("DEBUG", String.valueOf(preferenceManager.getBoolean(Constants.KEY_IS_SIGNED_IN)));
         if(preferenceManager.getBoolean(Constants.KEY_IS_SIGNED_IN)) {
             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
             startActivity(intent);
             finish();
+
         }
         binding = ActivitySignInBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());

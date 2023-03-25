@@ -16,7 +16,6 @@ import android.util.Patterns;
 import android.view.View;
 
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.project.chatapp.MainActivity;
 import com.project.chatapp.databinding.ActivitySignUpBinding;
 import com.project.chatapp.utils.AppUtils;
 import com.project.chatapp.utils.Constants;
