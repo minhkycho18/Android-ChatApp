@@ -30,7 +30,6 @@ public class SignInActivity extends AppCompatActivity {
             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
             startActivity(intent);
             finish();
-
         }
         binding = ActivitySignInBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
