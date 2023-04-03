@@ -7,12 +7,14 @@ public class User implements Serializable {
     private String image;
     private String email;
     private String token;
+    private String id;
     public User() {}
-    public User(String name, String image, String email, String token) {
+    public User(String name, String image, String email, String token,String id) {
         this.name = name;
         this.image = image;
         this.email = email;
         this.token = token;
+        this.id = id;
     }
 
     public String getName() {
@@ -25,6 +27,14 @@ public class User implements Serializable {
 
     public String getImage() {
         return image;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public void setImage(String image) {
