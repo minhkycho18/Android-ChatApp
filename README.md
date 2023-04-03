@@ -1,5 +1,5 @@
 
-# Chat App - version 1.0
+# Chat App - version 2.0
 
 INTRODUCTION: Chat App is an application used for chatting with your friends who also use this app. It uses a real-time database to upload your messages, so your friends can receive them immediately.
 
