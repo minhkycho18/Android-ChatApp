@@ -85,6 +85,7 @@ public class ChatActivity extends AppCompatActivity {
             conversion.put(Constants.KEY_RECEIVER_ID, receiverUser.getId());
             conversion.put(Constants.KEY_RECEIVER_NAME, receiverUser.getName());
             conversion.put(Constants.KEY_RECEIVER_IMAGE, receiverUser.getImage());
+            conversion.put(Constants.KEY_LAST_MESSAGE, binding.inputMessage.getText().toString());
             conversion.put(Constants.KEY_TIMESTAMP, new Date());
             addConversion(conversion);
         }
