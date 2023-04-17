@@ -1,6 +1,6 @@
 package com.project.chatapp.activities;
 
-import androidx.appcompat.app.AppCompatActivity;
+
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -16,7 +16,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.project.chatapp.R;
+
 import com.project.chatapp.adapters.ChatAdapter;
 import com.project.chatapp.databinding.ActivityChatBinding;
 import com.project.chatapp.models.ChatMessage;
@@ -26,16 +26,16 @@ import com.project.chatapp.utils.PreferenceManager;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
+
 import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 
-public class ChatActivity extends AppCompatActivity {
+public class ChatActivity extends BaseActivity {
 
     private ActivityChatBinding binding;
     private User receiverUser;
@@ -44,6 +44,8 @@ public class ChatActivity extends AppCompatActivity {
     private PreferenceManager preferenceManager;
     private FirebaseFirestore database;
     private String conversationId = null;
+    private Boolean isReceiverAvailable = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -90,6 +92,27 @@ public class ChatActivity extends AppCompatActivity {
             addConversion(conversion);
         }
         binding.inputMessage.setText(null);
+    }
+
+    private void listenAvailabilityReceiver() {
+        database.collection(Constants.KEY_COLLECTION_USERS).document(receiverUser.getId())
+                .addSnapshotListener(ChatActivity.this, ((value, error) -> {
+                    if(error != null){
+                        return ;
+                    }
+                    if(value != null){
+                        if(value.getLong(Constants.KEY_AVAILABILITY) != null){
+                            int availability = Objects.requireNonNull(value.getLong(Constants.KEY_AVAILABILITY))
+                                    .intValue();
+                            isReceiverAvailable = availability == 1;
+                        }
+                    }
+                    if(isReceiverAvailable){
+                        binding.textAvailability.setVisibility(View.VISIBLE);
+                    } else {
+                        binding.textAvailability.setVisibility(View.GONE);
+                    }
+                }));
     }
 
     private void listenMessages() {
@@ -197,4 +220,9 @@ public class ChatActivity extends AppCompatActivity {
             conversationId = documentSnapshot.getId();
         }
     };
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
 }
