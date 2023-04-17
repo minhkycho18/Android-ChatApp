@@ -1,5 +1,5 @@
 
-# Chat App - version 2.0
+# Chat App - version 3.0
 
 INTRODUCTION: Chat App is an application used for chatting with your friends who also use this app. It uses a real-time database to upload your messages, so your friends can receive them immediately.
 
@@ -18,6 +18,8 @@ INTRODUCTION: Chat App is an application used for chatting with your friends who
 - Show list users in firebase database
 - Show chat screen
 - Chat realtime
+- Show recent converstations
+- Show activities status
 
 ### LINKS:
 - Firebase: https://console.firebase.google.com/project/chatapp-c1b44/overview
@@ -41,6 +43,8 @@ INTRODUCTION: Chat App is an application used for chatting with your friends who
 | ![Main Screen](https://user-images.githubusercontent.com/81858258/227921581-46064666-0b80-4262-9a16-cbb1597af7c9.png) | ![ShowListUser](https://user-images.githubusercontent.com/81858258/227921799-8290cc39-f124-443e-88a3-cef33e71d33b.png) |
 
 | ![Sender1](https://user-images.githubusercontent.com/81858258/229527905-98a8b79b-25b1-44a1-b58a-2f790540b74c.png) | ![Sender2](https://user-images.githubusercontent.com/81858258/229528022-740d5012-e3d4-46d8-b4b7-6773ce6e9d3e.png) |
+
+| ![RecentConversations](https://user-images.githubusercontent.com/81858258/232532279-da220d76-a199-4b36-9a1f-a28bb7f3dfd2.png) | ![Status](https://user-images.githubusercontent.com/81858258/232532500-7c77dc6b-f338-4796-b1da-ef135b014cc1.png) |
 
 
 
