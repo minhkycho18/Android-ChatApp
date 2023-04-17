@@ -105,6 +105,7 @@ public class ChatActivity extends BaseActivity {
                             int availability = Objects.requireNonNull(value.getLong(Constants.KEY_AVAILABILITY))
                                     .intValue();
                             isReceiverAvailable = availability == 1;
+                            Log.d("DEBUG","available");
                         }
                     }
                     if(isReceiverAvailable){
@@ -224,5 +225,6 @@ public class ChatActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        listenAvailabilityReceiver();
     }
 }
