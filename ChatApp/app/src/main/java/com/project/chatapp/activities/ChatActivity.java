@@ -9,6 +9,8 @@ import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 
+import androidx.annotation.NonNull;
+
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentReference;
@@ -21,8 +23,15 @@ import com.project.chatapp.adapters.ChatAdapter;
 import com.project.chatapp.databinding.ActivityChatBinding;
 import com.project.chatapp.models.ChatMessage;
 import com.project.chatapp.models.User;
+import com.project.chatapp.network.ApiClient;
+import com.project.chatapp.network.ApiService;
+import com.project.chatapp.utils.AppUtils;
 import com.project.chatapp.utils.Constants;
 import com.project.chatapp.utils.PreferenceManager;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -34,6 +43,10 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class ChatActivity extends BaseActivity {
 
@@ -91,7 +104,63 @@ public class ChatActivity extends BaseActivity {
             conversion.put(Constants.KEY_TIMESTAMP, new Date());
             addConversion(conversion);
         }
+
+        if(!isReceiverAvailable) {
+            try {
+                JSONArray tokens = new JSONArray();
+                tokens.put(receiverUser.getToken());
+
+                JSONObject data = new JSONObject();
+                data.put(Constants.KEY_USER_ID, preferenceManager.getString(Constants.KEY_USER_ID));
+                data.put(Constants.KEY_NAME, preferenceManager.getString(Constants.KEY_NAME));
+                data.put(Constants.KEY_FCM_TOKEN, preferenceManager.getString(Constants.KEY_FCM_TOKEN));
+                data.put(Constants.KEY_MESSAGE, binding.inputMessage.getText().toString());
+
+                JSONObject body = new JSONObject();
+                body.put(Constants.REMOTE_MSG_DATA,data);
+                body.put(Constants.REMOTE_MSG_REGISTRATION_IDS, tokens);
+
+                sendNotification(body.toString());
+            } catch (Exception exception) {
+                AppUtils.showToast(exception.getMessage(),getApplicationContext());
+            }
+        }
+
         binding.inputMessage.setText(null);
+    }
+    
+    private void sendNotification(String messageBody) {
+        ApiClient.getClient().create(ApiService.class).sendMessage(
+                Constants.getRemoteMsgHeaders(),
+                messageBody
+        ).enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(@NonNull Call<String> call,@NonNull  Response<String> response) {
+                if(response.isSuccessful()) {
+                    try {
+                        if(response.body() != null) {
+                            JSONObject responseJson = new JSONObject(response.body());
+                            JSONArray result = responseJson.getJSONArray("results");
+                            if(responseJson.getInt("failure") == 1){
+                                JSONObject error = (JSONObject) result.get(0);
+                                AppUtils.showToast(error.getString("error"),getApplicationContext());
+                            }
+                        }
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    AppUtils.showToast("Notification sent successfully",getApplicationContext());
+                } else {
+                    AppUtils.showToast("Error: " + response.code(),getApplicationContext());
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull  Call<String> call, @NonNull Throwable t) {
+                AppUtils.showToast(t.getMessage(),getApplicationContext());
+            }
+        });
     }
 
     private void listenAvailabilityReceiver() {
@@ -107,12 +176,19 @@ public class ChatActivity extends BaseActivity {
                             isReceiverAvailable = availability == 1;
                             Log.d("DEBUG","available");
                         }
+                        receiverUser.setToken(value.getString(Constants.KEY_FCM_TOKEN));
+                        if(receiverUser.getImage() == null) {
+                            receiverUser.setImage(value.getString(Constants.KEY_IMAGE));
+                            chatAdapter.setReceiverProfileImage(getBitmapFromEncodedString(receiverUser.getImage()));
+                            chatAdapter.notifyItemRangeChanged(0, chatMessages.size());
+                        }
                     }
                     if(isReceiverAvailable){
                         binding.textAvailability.setVisibility(View.VISIBLE);
                     } else {
                         binding.textAvailability.setVisibility(View.GONE);
                     }
+
                 }));
     }
 
@@ -162,8 +238,13 @@ public class ChatActivity extends BaseActivity {
     });
 
     private Bitmap getBitmapFromEncodedString(String encodedImage) {
-        byte[] bytes = Base64.decode(encodedImage, Base64.DEFAULT);
-        return BitmapFactory.decodeByteArray(bytes,0,bytes.length);
+        if(encodedImage != null) {
+            byte[] bytes = Base64.decode(encodedImage, Base64.DEFAULT);
+            return BitmapFactory.decodeByteArray(bytes,0,bytes.length);
+        } else {
+            return null;
+        }
+
     }
 
     private void loadReceiverDetails() {
